@@ -21,9 +21,7 @@ public class ContextFilter {
 
     @ServerRequestFilter(priority = Priorities.AUTHORIZATION + 1, preMatching = true)
     public Uni<RestResponse<?>> filter(final ContainerRequestContext reqContext) {
-        System.out.println("context filter");
         if (securityIdentity.isAnonymous()) {
-            System.out.println("anonymous context");
             return Uni.createFrom().item(RestResponse.status(Response.Status.UNAUTHORIZED));
         }
         reqContext.setSecurityContext(securityContextSupplier.get());
